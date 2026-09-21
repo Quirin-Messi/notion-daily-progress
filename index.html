@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Progress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="widget-shell">
+    <section class="progress-card" aria-label="Daily Progress Widget">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">TODAY</p>
+          <h1>Daily Progress</h1>
+        </div>
+        <div class="percentage" id="percentage">0%</div>
+      </div>
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="progressTrack"
+      >
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="summary-row">
+        <span id="summary">0 von 0 Habits erledigt</span>
+        <span id="dateLabel"></span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="habit-list" id="habitList"></div>
+
+      <button class="reset-button" id="resetButton" type="button">
+        Heute zurücksetzen
+      </button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
