@@ -1,72 +1,39 @@
-# Daily Progress Widget – Version 1
+# Daily Progress Widget – Version 2
 
-Ein minimalistisches Habit-Progress-Widget als Grundlage für die spätere Notion-Integration.
+Ein minimalistisches Notion-Widget für den täglichen Habit-Fortschritt.
 
-## Funktionen
+## V2
 
-- großer animierter Fortschrittsbalken
-- Prozentanzeige
-- Habit-Checkboxen
-- automatische Fortschrittsberechnung
-- Speicherung im Browser (`localStorage`)
-- automatischer Tageswechsel / Daily Reset
-- responsive Darstellung für Desktop und Mobile
-- geeignet zur Veröffentlichung über GitHub Pages
+Die Oberfläche ist auf die echte Notion-Habit-Datenbank zugeschnitten und unterstützt:
 
-## Lokal testen
+- Bett Machen
+- 8k Steps
+- Buch lesen
+- Spanisch
+- Tagebuch
 
-Am einfachsten:
+Im Vercel-Betrieb liest das Widget den heutigen Datensatz direkt aus Notion. Checkbox-Änderungen im Widget werden über eine serverseitige API sicher nach Notion zurückgeschrieben.
 
-1. ZIP entpacken.
-2. `index.html` doppelklicken.
-3. Habits abhaken und den Fortschrittsbalken testen.
+## Sicherheit
 
-Alternativ mit einem lokalen Webserver:
+Der Notion-Token gehört **nicht** in dieses öffentliche Repository. Er wird ausschließlich als Vercel Environment Variable gespeichert.
 
-```bash
-python3 -m http.server 8000
-```
+Benötigte Variablen:
 
-Danach im Browser `http://localhost:8000` öffnen.
+- `NOTION_TOKEN`
+- `NOTION_DATA_SOURCE_ID`
 
-## Habits ändern
+## Architektur
 
-In `app.js` ganz oben:
-
-```js
-const DEFAULT_HABITS = [
-  "Gym",
-  "Lesen",
-  "2 L Wasser",
-  "10.000 Schritte",
-  "Stretching",
-  "Tagesplanung"
-];
-```
-
-Einträge einfach durch die eigenen Habits ersetzen.
-
-## Auf GitHub veröffentlichen
-
-1. Neues Repository anlegen, z. B. `notion-daily-progress`.
-2. `index.html`, `styles.css`, `app.js` und `README.md` hochladen.
-3. Repository → **Settings** → **Pages**.
-4. Unter **Build and deployment**: `Deploy from a branch`.
-5. Branch `main`, Ordner `/ (root)`.
-6. Speichern.
-7. Die veröffentlichte URL kann später in Notion per `/embed` eingebunden werden.
-
-## Nächster Schritt: echte Notion-Daten
-
-Version 1 verwendet absichtlich noch keine Notion-Zugangsdaten.
-
-Für Version 2 bauen wir einen kleinen sicheren Backend-Endpunkt. Der Notion-Integration-Token darf nicht direkt in `app.js` oder einem öffentlichen GitHub-Repository liegen.
-
-Geplante Architektur:
-
-Notion-Datenbank
-→ sicherer Backend-Endpunkt
-→ Widget
+Notion Days Database
+→ Vercel Function (`/api/habits`)
+→ Daily Progress Widget
 → Notion Embed
 
-Dann werden die Habit-Namen und Checkbox-Zustände direkt aus Notion gelesen und Änderungen zurückgeschrieben.
+## Fallback
+
+Wenn die Vercel-API noch nicht konfiguriert ist, läuft das Widget weiterhin in einem lokalen Browser-Modus. Dadurch bleibt die GitHub-Pages-Version während der Einrichtung funktionsfähig.
+
+## Deployment
+
+Das Repository kann mit Vercel verbunden werden. Dateien im Ordner `api/` werden als Vercel Functions bereitgestellt; HTML, CSS und JavaScript werden statisch ausgeliefert.
