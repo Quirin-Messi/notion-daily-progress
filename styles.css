@@ -28,6 +28,11 @@ body {
   min-height: 100vh;
 }
 
+button,
+input {
+  font: inherit;
+}
+
 .widget-shell {
   width: 100%;
   min-height: 100vh;
@@ -91,18 +96,79 @@ h1 {
   transition: width 420ms cubic-bezier(.2,.8,.2,1);
 }
 
-.summary-row {
+.summary-row,
+.sync-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
+}
+
+.summary-row {
   margin-top: 12px;
   color: var(--muted);
   font-size: 0.86rem;
 }
 
+.sync-row {
+  margin-top: 14px;
+}
+
+.sync-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.77rem;
+  font-weight: 500;
+}
+
+.sync-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #a6adb6;
+}
+
+.sync-status[data-state="live"]::before {
+  background: #2f855a;
+}
+
+.sync-status[data-state="error"]::before {
+  background: #b45353;
+}
+
+.sync-status[data-state="syncing"]::before {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.refresh-button {
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 160ms ease;
+}
+
+.refresh-button:hover {
+  background: rgba(17, 24, 39, 0.04);
+  color: var(--text);
+}
+
+.refresh-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .divider {
   height: 1px;
-  margin: 26px 0 12px;
+  margin: 22px 0 12px;
   background: var(--border);
 }
 
@@ -162,6 +228,10 @@ h1 {
   transform: scale(1);
 }
 
+.habit input:disabled + .checkmark {
+  opacity: 0.55;
+}
+
 .habit-name {
   font-size: 0.97rem;
   font-weight: 500;
@@ -173,24 +243,9 @@ h1 {
   opacity: 0.7;
 }
 
-.reset-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: transparent;
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.84rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 160ms ease;
-}
-
-.reset-button:hover {
-  background: rgba(17, 24, 39, 0.04);
-  color: var(--text);
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
 }
 
 @media (max-width: 560px) {
@@ -209,6 +264,7 @@ h1 {
 
   .summary-row {
     flex-direction: column;
+    align-items: flex-start;
     gap: 4px;
   }
 
